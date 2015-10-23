@@ -695,7 +695,7 @@ namespace AutoCountDemo
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            string wcfip = "";//GetCurrentPath();
+            string wcfip = GetCurrentPath();
             if (wcfip == "")
             {
                 wcfip = "33.0.1.4";
