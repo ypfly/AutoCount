@@ -816,7 +816,7 @@ namespace AutoCountDemo
                 md.SetRichTextBoxText(richTextBox1, "标签文件下载失败，请联系管理员", true);
                 return false;
             }
-            md.SetRichTextBoxText(richTextBox1, PrintMRZ.printStimulsoftReports(FTPid, ds, true), false);
+            md.SetRichTextBoxText(richTextBox1, PrintMRZ.printStimulsoftReports(FTPid, ds, false), false);
             return true;
         }
 
