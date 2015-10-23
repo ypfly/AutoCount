@@ -646,9 +646,20 @@ namespace AutoCountDemo
         /// <returns></returns>
         public string GetCurrentPath()
         {
-            string path1 = getw();//@"{0}Program Files (x86)\OrBit Systems Inc\OrBit-Browser Pro\BrowserPro.exe.config";
-
+            string path1 = "";
+            try
+            {
+                path1 = getw();//@"{0}Program Files (x86)\OrBit Systems Inc\OrBit-Browser Pro\BrowserPro.exe.config";
+            }
+            catch
+            {
+                md.SetRichTextBoxText(richTextBox1, "没有找到WCF配置文件", true);
+                return "";
+            }
+          
+            
             path1 += ".config";
+
             if (File.Exists(path1))
             {
                 return GetWCFIP(path1);
@@ -695,7 +706,10 @@ namespace AutoCountDemo
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            string wcfip = GetCurrentPath();
+            string wcfip = "";
+
+            wcfip = GetCurrentPath();
+
             if (wcfip == "")
             {
                 wcfip = "33.0.1.4";
@@ -765,13 +779,13 @@ namespace AutoCountDemo
             {
                 BZpcs = int.Parse(textBZpcs.Text);
             }
-         
-            amount = ltpcs > 0 ? ltpcs +  BZpcs *(gttmNum-1)  : gttmNum * BZpcs;
+
+            amount = ltpcs > 0 ? ltpcs + BZpcs * (gttmNum - 1) : gttmNum * BZpcs;
             LotsnSUM = int.Parse(DGVLotSN.Rows[0].Cells["pcs"].Value.ToString());
             sxSUM = Convert.ToInt32((LotsnSUM * _packConfig.LotSNAmount + LotsnSUM));
             if (amount > sxSUM)
             {
-                MessageBox.Show("当前随工单称重数量" + amount + "以超过了随工单原数量的"+(_packConfig.LotSNAmount*100).ToString()+"%(" + sxSUM + ")");
+                MessageBox.Show("当前随工单称重数量" + amount + "以超过了随工单原数量的" + (_packConfig.LotSNAmount * 100).ToString() + "%(" + sxSUM + ")");
                 md.SetRichTextBoxText(richTextBox1, "当前随工单称重数量" + amount + "以超过了随工单原数量的" + (_packConfig.LotSNAmount * 100).ToString() + "%(" + sxSUM + ")", true);
                 return false;
             }
