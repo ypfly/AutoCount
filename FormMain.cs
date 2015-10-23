@@ -753,8 +753,8 @@ namespace AutoCountDemo
             MOQtyRequired = int.Parse(numMOQtyRequired.Text),//
             BZpcs = 0,// 标准数量           
             ltpcs = lt,//零头箱数量
-            gttmNum = gts //条码数量			
-            ;
+            gttmNum = gts,//条码数量		
+            amount = 0;
             //textBZpcs.Text = "4000";
             if (textBZpcs.Text != "")
             {
@@ -764,15 +764,19 @@ namespace AutoCountDemo
             {
                 gttmNum -= 1;
             }
-
-            if (gttmNum * BZpcs + ltpcs > int.Parse(DGVLotSN.Rows[0].Cells["pcs"].Value.ToString()))
+            amount = ltpcs > 0 ? ltpcs + gttmNum * (BZpcs - 1) : gttmNum * BZpcs;
+         
+            if (amount > int.Parse(DGVLotSN.Rows[0].Cells["pcs"].Value.ToString()))
             {
-                MessageBox.Show("当前随工单产品数量没有" + (gts * BZpcs + ltpcs) + "个！");
-                md.SetRichTextBoxText(richTextBox1, "当前随工单产品数量没有" + (gts * BZpcs + ltpcs) + "个！", true);
+                MessageBox.Show("当前随工单产品数量没有" + amount + "个！");
+                md.SetRichTextBoxText(richTextBox1, "当前随工单产品数量没有" + amount + "个！", true);
                 return false;
             }
+        
             string sql = string.Format(sqlHelp.PrintBSD, lotsn, BZpcs, int.Parse(DGVLotSN.Rows[0].Cells["pcs"].Value.ToString())
-                                                        , NumpieceWeight.Value.ToString(), comMOid.Text, ltpcs, gts, gttmNum * BZpcs + ltpcs, "admin");
+                                                        , NumpieceWeight.Value.ToString(), comMOid.Text, ltpcs, gts, amount, "admin");
+            //md.SetRichTextBoxText(richTextBox1,sql,true);
+            //return false;
             DataSet ds = adc.GetDataSetWithSQLString(WCFADD, sql);
             if (ds.Tables[ds.Tables.Count - 1].Rows[0]["Return Value"].ToString() == "-1")
             {
