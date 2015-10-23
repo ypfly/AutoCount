@@ -113,7 +113,8 @@ namespace AutoCountDemo
         public const string GetConfig = @"SELECT
                                                 CountModuleIP,
                                                 StandardPCSUpperLimit,
-                                                PortName
+                                                PortName,
+                                                LotSNAmount
                                             FROM DDPackconfigTable
                                             WHERE PackNO = '{0}'";
 

@@ -89,13 +89,13 @@ namespace AutoCountDemo
             }
             catch
             {
-                MessageBox.Show("FTP服务器地址出错，请联系管理员","系统提示");
+                MessageBox.Show("FTP服务器地址出错，请联系管理员", "系统提示");
                 return;
             }
             //[FTP:33.0.1.4,USER:Mesuser,PASSWORD:Mesorbit123,FOLDER:MRZ]
             string[] strq = strmsg.Split(',');
             try
-            {                
+            {
                 foreach (var item in strq)
                 {
                     if (item.Contains("FTP"))
@@ -350,7 +350,7 @@ namespace AutoCountDemo
                     if (ltds.Tables.Count <= 0)
                         return;
 
-                  
+
                     if (ltds.Tables[0].Rows[0][0].ToString() != "")
                         lt = int.Parse(ltds.Tables[0].Rows[0][0].ToString());
                     md.SetRichTextBoxText(richTextBox1, "即将打印[" + oldLotsn + "]的[" + mCount + "]张客户条码", false);
@@ -404,7 +404,7 @@ namespace AutoCountDemo
                     MessageBox.Show(mods.Tables[mods.Tables.Count - 1].Rows[0]["@I_ReturnMessage"].ToString());
                     md.SetRichTextBoxText(richTextBox1, mods.Tables[mods.Tables.Count - 1].Rows[0]["@I_ReturnMessage"].ToString(), true);
                 }
-               
+
                 comMOid.DataSource = mods.Tables[0];
                 comMOid.Rows[0].Activation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
                 for (int i = 0; i < mods.Tables[0].Columns.Count; i++)
@@ -442,7 +442,7 @@ namespace AutoCountDemo
         void SetUltragridCaption(UltraGridLayout gridlayout, string ColumnsName, string CaptionName)
         {
             gridlayout.Bands[0].Columns[ColumnsName].Header.Caption = CaptionName;
-          
+
         }
 
         /// <summary>
@@ -457,7 +457,7 @@ namespace AutoCountDemo
             if (e.Row.Cells.Count < 3)
                 return;
             string SingleWeight = e.Row.Cells["JGSingleWeightid"].Value.ToString();
-          
+
             string sql = string.Format(sqlHelp.GeMOinfo, e.Row.Cells["DDMoItem"].Value.ToString());
             DataSet ds = adc.GetDataSetWithSQLString(WCFADD, sql);
             DGVMoInfo.DataSource = ds;
@@ -564,7 +564,7 @@ namespace AutoCountDemo
                 string x = sport.ReadLine();
                 //因为要访问ui资源，所以需要使用invoke方式同步ui
                 this.Invoke((EventHandler)(delegate
-                {                 
+                {
                     textWeight.Text = x.Replace("\r\n", "");
                     // md.SetRichTextBoxText(richTextBox1,builder.ToString()+"\n",false);bu                  
 
@@ -589,11 +589,12 @@ namespace AutoCountDemo
         bool GetConfigInfo(string packNO)
         {
             DataSet ds = adc.GetDataSetWithSQLString(WCFADD, string.Format(sqlHelp.GetConfig, packNO));
-            if (ds!=null && ds.Tables.Count > 0 && ds.Tables[ds.Tables.Count - 1].Rows.Count > 0)
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[ds.Tables.Count - 1].Rows.Count > 0)
             {
                 _packConfig.ip = ds.Tables[ds.Tables.Count - 1].Rows[0]["CountModuleIP"].ToString();
                 _packConfig.PortName = ds.Tables[ds.Tables.Count - 1].Rows[0]["PortName"].ToString();
                 _packConfig.StandardPCSUpperLimit = 0;
+                _packConfig.LotSNAmount = float.Parse(ds.Tables[ds.Tables.Count - 1].Rows[0]["LotSNAmount"].ToString());
                 try
                 {
                     if (ds.Tables[ds.Tables.Count - 1].Rows[0]["StandardPCSUpperLimit"].ToString() != "")
@@ -623,11 +624,11 @@ namespace AutoCountDemo
             Process process;
             for (int i = 0; i < processes.Length - 1; i++)
             {
-                process = processes[i];              
+                process = processes[i];
                 if (process.ProcessName == "BrowserPro")
                 {
-                   str = process.MainModule.FileName.ToString();
-                   return str;
+                    str = process.MainModule.FileName.ToString();
+                    return str;
                 }
                 if (process.ProcessName == "Browser")
                 {
@@ -644,19 +645,19 @@ namespace AutoCountDemo
         /// </summary>
         /// <returns></returns>
         public string GetCurrentPath()
-        {          
+        {
             string path1 = getw();//@"{0}Program Files (x86)\OrBit Systems Inc\OrBit-Browser Pro\BrowserPro.exe.config";
-           
-                path1 += ".config";
-                if (File.Exists(path1))
-                {
-                    return GetWCFIP(path1);
-                }               
-                else
-                {
-                    md.SetRichTextBoxText(richTextBox1, "没有找到WCF配置文件", true);
-                }
-          
+
+            path1 += ".config";
+            if (File.Exists(path1))
+            {
+                return GetWCFIP(path1);
+            }
+            else
+            {
+                md.SetRichTextBoxText(richTextBox1, "没有找到WCF配置文件", true);
+            }
+
             return "";
 
         }
@@ -694,7 +695,7 @@ namespace AutoCountDemo
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            string wcfip = GetCurrentPath();
+            string wcfip = "";//GetCurrentPath();
             if (wcfip == "")
             {
                 wcfip = "33.0.1.4";
@@ -754,28 +755,30 @@ namespace AutoCountDemo
             BZpcs = 0,// 标准数量           
             ltpcs = lt,//零头箱数量
             gttmNum = gts,//条码数量		
-            amount = 0;
+            amount = 0, //称重时的总数
+            LotsnSUM = 0, //随工单的总数
+            sxSUM = 0
+            ;
+
             //textBZpcs.Text = "4000";
             if (textBZpcs.Text != "")
             {
                 BZpcs = int.Parse(textBZpcs.Text);
             }
-            if (ltpcs > 0)
-            {
-                gttmNum -= 1;
-            }
-            amount = ltpcs > 0 ? ltpcs + gttmNum * (BZpcs - 1) : gttmNum * BZpcs;
          
-            if (amount > int.Parse(DGVLotSN.Rows[0].Cells["pcs"].Value.ToString()))
+            amount = ltpcs > 0 ? ltpcs +  BZpcs *(gttmNum-1)  : gttmNum * BZpcs;
+            LotsnSUM = int.Parse(DGVLotSN.Rows[0].Cells["pcs"].Value.ToString());
+            sxSUM = Convert.ToInt32((LotsnSUM * _packConfig.LotSNAmount + LotsnSUM));
+            if (amount > sxSUM)
             {
-                MessageBox.Show("当前随工单产品数量没有" + amount + "个！");
-                md.SetRichTextBoxText(richTextBox1, "当前随工单产品数量没有" + amount + "个！", true);
+                MessageBox.Show("当前随工单称重数量" + amount + "以超过了随工单原数量的"+(_packConfig.LotSNAmount*100).ToString()+"%(" + sxSUM + ")");
+                md.SetRichTextBoxText(richTextBox1, "当前随工单称重数量" + amount + "以超过了随工单原数量的" + (_packConfig.LotSNAmount * 100).ToString() + "%(" + sxSUM + ")", true);
                 return false;
             }
-        
+
             string sql = string.Format(sqlHelp.PrintBSD, lotsn, BZpcs, int.Parse(DGVLotSN.Rows[0].Cells["pcs"].Value.ToString())
                                                         , NumpieceWeight.Value.ToString(), comMOid.Text, ltpcs, gts, amount, "admin");
-            //md.SetRichTextBoxText(richTextBox1,sql,true);
+            //md.SetRichTextBoxText(richTextBox1, sql, true);
             //return false;
             DataSet ds = adc.GetDataSetWithSQLString(WCFADD, sql);
             if (ds.Tables[ds.Tables.Count - 1].Rows[0]["Return Value"].ToString() == "-1")
@@ -792,7 +795,7 @@ namespace AutoCountDemo
 
             string FtpDirectory = ftpdt.Rows[0][1].ToString();
 
-            
+
             if (PrintMRZ.DownloadFtp(temp, FTPid, FTP.ftpDIR + "/" + FtpDirectory + "/" + FTPid, FTP.ftpip, FTP.ftpUNM, FTP.ftpPWD) == -2)
             {
                 MessageBox.Show("标签文件下载失败，请联系管理员");
@@ -888,22 +891,22 @@ namespace AutoCountDemo
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void textWeight_TextChanged(object sender, EventArgs e)
-        {           
+        {
             string weight = textWeight.Text.ToLower();
             if (weight.Length < 2)
                 return;
             bool iskg = false;
-          
+
             if (weight.Contains("g") && !weight.Contains("k"))
             {
                 D_weight = WeightSubstring(weight, "g");
-                iskg = false;            
+                iskg = false;
             }
             if (weight.Contains("kg"))
             {
                 D_weight = WeightSubstring(weight, "k");
                 iskg = true;
-             
+
             }
 
             if (fspw != null)
@@ -922,12 +925,12 @@ namespace AutoCountDemo
                 textPCS.Text = Convert.ToInt32(D_weight / (Convert.ToDouble(NumpieceWeight.Value.ToString()) / 1000)).ToString();
             }
             else
-            {              
+            {
                 textPCS.Text = Convert.ToInt32((D_weight / (Convert.ToDouble(NumpieceWeight.Value.ToString())))).ToString();
             }
 
-           
-          
+
+
 
         }
 
@@ -1029,7 +1032,7 @@ namespace AutoCountDemo
 
         private void butShowSetPWF_Click(object sender, EventArgs e)
         {
-       
+
             fspw = new FormSetPieceWeight(D_weight, textWeight.Text);
             if (fspw.ShowDialog() == DialogResult.OK)
             {
@@ -1040,7 +1043,7 @@ namespace AutoCountDemo
                     md.SetRichTextBoxText(richTextBox1, "没有料号", true);
                     return;
                 }
-                NumpieceWeight.Value =decimal.Parse(PieceWeight.ToString());
+                NumpieceWeight.Value = decimal.Parse(PieceWeight.ToString());
                 string sql = string.Format(sqlHelp.SetpieceWeight, PieceWeight, DGVLotSN.Rows[0].Cells["ProductNO"].Value.ToString());
                 adc.GetDataSetWithSQLString(WCFADD, sql);
                 fspw.Close();
@@ -1054,7 +1057,7 @@ namespace AutoCountDemo
         /// <param name="e"></param>
         private void butSaveLtWeight_Click(object sender, EventArgs e)
         {
-           
+
             string lotsn = textLotSN.Text;
             int pcs = 0;
             if (textPCS.Text != "")
