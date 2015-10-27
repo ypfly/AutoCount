@@ -343,23 +343,23 @@ namespace AutoCountDemo
 
             if (e.KeyValue == 13)
             {
-                if (oldLotsn != "")
-                {
-                    int lt = 0;
-                    DataSet ltds = adc.GetDataSetWithSQLString(WCFADD, string.Format(sqlHelp.GetLTPCS, oldLotsn));
-                    if (ltds.Tables.Count <= 0)
-                        return;
+                //if (oldLotsn != "")
+                //{
+                //    int lt = 0;
+                //    DataSet ltds = adc.GetDataSetWithSQLString(WCFADD, string.Format(sqlHelp.GetLTPCS, oldLotsn));
+                //    if (ltds.Tables.Count <= 0)
+                //        return;
 
 
-                    if (ltds.Tables[0].Rows[0][0].ToString() != "")
-                        lt = int.Parse(ltds.Tables[0].Rows[0][0].ToString());
-                    md.SetRichTextBoxText(richTextBox1, "即将打印[" + oldLotsn + "]的[" + mCount + "]张客户条码", false);
-                    printBQ(oldLotsn, lt, int.Parse(label1.Text));
-                    mCount = 0;
-                    PostMessage("0");
-                    olddz = 0;
+                //    if (ltds.Tables[0].Rows[0][0].ToString() != "")
+                //        lt = int.Parse(ltds.Tables[0].Rows[0][0].ToString());
+                //    md.SetRichTextBoxText(richTextBox1, "即将打印[" + oldLotsn + "]的[" + mCount + "]张客户条码", false);
+                //    printBQ(oldLotsn, lt, int.Parse(label1.Text));
+                //    mCount = 0;
+                //    PostMessage("0");
+                //    olddz = 0;
 
-                }
+                //}
                 comMOid.Text = "";
                 string sql = string.Format(sqlHelp.GetLotsnINfo, textLotSN.Text);
                 DataSet ds = adc.GetDataSetWithSQLString(WCFADD, sql);
@@ -371,7 +371,7 @@ namespace AutoCountDemo
                 if (ds.Tables[0].Rows.Count <= 0)
                     return;
                 DGVLotSN.DataSource = ds.Tables[0];
-                DGVLotSN.Rows[0].Activation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
+                DGVLotSN.Rows[0].Activation = Activation.NoEdit;
                 for (int i = 0; i < ds.Tables[0].Columns.Count; i++)
                 {
                     switch (ds.Tables[0].Columns[i].ColumnName)
