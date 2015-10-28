@@ -37,7 +37,7 @@ namespace AutoCountDemo
         public const string GeMOinfo = @"select --ms.ScheduleNo,
 		                 mo.id as '工单ID号',mo.MOName,pr.ProductName ,p.ProductDescription+p.ProductDescription1 as ProductDescription,
 		                PlannedDateFrom,MOQtyRequired,isnull(mo.RealmaterialQty,0) as Realmaterialpcs,DDmaterialQty,pg.BoxNum as BZWeight ,
-						p.JGSingleWeight
+						'' as JGSingleWeight
                         --,p.FXSingleBoxNum as '单盒数量',p.UpTolerance,p.LowTolerance
 	                    from mo 
 	                    join Product p on p.ProductId=mo.ProductId
