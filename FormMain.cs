@@ -717,7 +717,7 @@ namespace AutoCountDemo
             }
             WCFADD = string.Format(WCFADD, wcfip);
 
-            _packConfig.PackNO = "Pack1";//Dns.GetHostName();
+            _packConfig.PackNO = Dns.GetHostName();
             md.SetRichTextBoxText(richTextBox1, "WCFIP:" + wcfip, false);
 
             GetFtpInfo();
