@@ -45,6 +45,9 @@
             Infragistics.Win.Appearance appearance9 = new Infragistics.Win.Appearance();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.splitter1 = new System.Windows.Forms.Splitter();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.butSaveLtWeight = new System.Windows.Forms.Button();
             this.butShowSetPWF = new System.Windows.Forms.Button();
@@ -78,10 +81,10 @@
             this.textLotSN = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.splitter1 = new System.Windows.Forms.Splitter();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            this.panel7.SuspendLayout();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumpieceWeight)).BeginInit();
             this.panel4.SuspendLayout();
@@ -91,7 +94,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.DGVLotSN)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.comMOid)).BeginInit();
-            this.panel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -120,6 +122,36 @@
             this.panel1.Size = new System.Drawing.Size(1362, 741);
             this.panel1.TabIndex = 7;
             // 
+            // splitter1
+            // 
+            this.splitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.splitter1.Location = new System.Drawing.Point(0, 639);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(1362, 3);
+            this.splitter1.TabIndex = 32;
+            this.splitter1.TabStop = false;
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.richTextBox1);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel7.Location = new System.Drawing.Point(0, 642);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(1362, 99);
+            this.panel7.TabIndex = 31;
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.BackColor = System.Drawing.Color.Black;
+            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox1.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.richTextBox1.ForeColor = System.Drawing.Color.Red;
+            this.richTextBox1.Location = new System.Drawing.Point(0, 0);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(1362, 99);
+            this.richTextBox1.TabIndex = 1;
+            this.richTextBox1.Text = "";
+            // 
             // panel5
             // 
             this.panel5.Controls.Add(this.butSaveLtWeight);
@@ -131,6 +163,8 @@
             this.panel5.Controls.Add(this.textWeight);
             this.panel5.Controls.Add(this.label4);
             this.panel5.Controls.Add(this.textPCS);
+            this.panel5.Controls.Add(this.label15);
+            this.panel5.Controls.Add(this.label14);
             this.panel5.Controls.Add(this.label10);
             this.panel5.Controls.Add(this.btnPrint);
             this.panel5.Controls.Add(this.textBZpcs);
@@ -208,6 +242,7 @@
             this.NumpieceWeight.Name = "NumpieceWeight";
             this.NumpieceWeight.Size = new System.Drawing.Size(237, 51);
             this.NumpieceWeight.TabIndex = 31;
+            this.NumpieceWeight.ValueChanged += new System.EventHandler(this.NumpieceWeight_ValueChanged);
             // 
             // butSetdz
             // 
@@ -558,35 +593,25 @@
             this.label2.TabIndex = 22;
             this.label2.Text = "随工单：";
             // 
-            // panel7
+            // label14
             // 
-            this.panel7.Controls.Add(this.richTextBox1);
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel7.Location = new System.Drawing.Point(0, 642);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(1362, 99);
-            this.panel7.TabIndex = 31;
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("微软雅黑", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label14.Location = new System.Drawing.Point(696, 14);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(130, 35);
+            this.label14.TabIndex = 30;
+            this.label14.Text = "标准重量:";
             // 
-            // richTextBox1
+            // label15
             // 
-            this.richTextBox1.BackColor = System.Drawing.Color.Black;
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.richTextBox1.ForeColor = System.Drawing.Color.Red;
-            this.richTextBox1.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(1362, 99);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
-            // 
-            // splitter1
-            // 
-            this.splitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.splitter1.Location = new System.Drawing.Point(0, 639);
-            this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(1362, 3);
-            this.splitter1.TabIndex = 32;
-            this.splitter1.TabStop = false;
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("微软雅黑", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label15.Location = new System.Drawing.Point(737, 55);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(31, 35);
+            this.label15.TabIndex = 30;
+            this.label15.Text = "0";
             // 
             // Form1
             // 
@@ -601,6 +626,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Shown += new System.EventHandler(this.Form1_Shown);
             this.panel1.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumpieceWeight)).EndInit();
@@ -613,7 +639,6 @@
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.comMOid)).EndInit();
-            this.panel7.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -657,6 +682,8 @@
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
     }
 }
 

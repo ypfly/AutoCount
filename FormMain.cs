@@ -1064,6 +1064,18 @@ namespace AutoCountDemo
             }
         }
 
+        private void NumpieceWeight_ValueChanged(object sender, EventArgs e)
+        {
+            double d = Convert.ToDouble(NumpieceWeight.Value);
+            int i = 0;
+            if (textBZpcs.Text != "" && textBZpcs.Text!="0")
+            {
+                i = int.Parse(textBZpcs.Text);
+                  label15.Text= ((d/1000.0) * i).ToString("0.0000kg");
+            }
+         
+        }
+
         /// <summary>
         /// 保存零头重量
         /// </summary>
